@@ -59,16 +59,16 @@ OTHER DEALINGS IN THE SOFTWARE.
                    FontFamily="{Binding Path=FontFamily, ElementName=PART_EDITFIELD}"
                    FontStyle="{Binding Path=WatermarkFontStyle, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                    FontWeight="{Binding Path=WatermarkFontWeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-            
+
             <TextBlock.Visibility>
-                
+
                 <MultiBinding Converter="{StaticResource watermarkVisibilityConverter}"
                               ConverterParameter="invert">
                     <Binding Path="Text"
                              ElementName="PART_EDITFIELD"/>
                     <Binding Path="IsKeyboardFocused"
                              ElementName="PART_EDITFIELD" />
-                    
+
                 </MultiBinding>
             </TextBlock.Visibility>
         </TextBlock>
@@ -89,7 +89,17 @@ OTHER DEALINGS IN THE SOFTWARE.
             <ListView Name="lstSearchItems"
                       VirtualizingStackPanel.IsVirtualizing="True"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
-                      PreviewKeyDown="lstSearchItems_PreviewKeyDown" />
+                      PreviewKeyDown="lstSearchItems_PreviewKeyDown" >
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="LightBlue"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
 
         </Popup>
 
@@ -125,7 +135,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <ProgressBar Grid.Column="0"
                                  IsIndeterminate="True"
                                  MinWidth="125" />
-                    
+
                     <TextBlock Grid.Column="0" 
                                Padding="4,2,2,2"
                                VerticalAlignment="Center"
