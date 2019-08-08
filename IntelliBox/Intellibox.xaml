@@ -30,24 +30,29 @@ OTHER DEALINGS IN THE SOFTWARE.
              xmlns:ctrl="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
              xmlns:local="clr-namespace:FeserWard.Controls">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Popup}">
-            <Setter Property="Margin"
-                    Value="1" />
-            <Setter Property="AllowsTransparency"
-                    Value="true" />
-            <Setter Property="Placement"
-                    Value="Bottom" />
-        </Style>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type Popup}">
+                <Setter Property="Margin"
+                        Value="1" />
+                <Setter Property="AllowsTransparency"
+                        Value="true" />
+                <Setter Property="Placement"
+                        Value="Bottom" />
+            </Style>
 
-        <local:WatermarkTextVisibilityConverter x:Key="watermarkVisibilityConverter" />
+            <local:WatermarkTextVisibilityConverter x:Key="watermarkVisibilityConverter" />
+        </ResourceDictionary>
+
     </UserControl.Resources>
 
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=PART_EDITFIELD}">
         <TextBox Name="PART_EDITFIELD"
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
                  GotFocus="PART_EDITFIELD_GotFocus"
-                 TextChanged="OnTextBoxChanged" />
+                 FontFamily="Microsoft YaHei"
+                 FontSize="12"
+                 TextChanged="OnTextBoxChanged"/>
         <TextBlock Margin="1"
                    Padding="4,2"
                    Focusable="False"
@@ -87,14 +92,28 @@ OTHER DEALINGS IN THE SOFTWARE.
                PreviewMouseUp="Popup_PreviewMouseButton">
 
             <ListView Name="lstSearchItems"
+                      AlternationCount="2"
                       VirtualizingStackPanel.IsVirtualizing="True"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
-                      PreviewKeyDown="lstSearchItems_PreviewKeyDown" >
+                      PreviewKeyDown="lstSearchItems_PreviewKeyDown" MouseDoubleClick="OnListItemMouseDoubleClick" PreviewMouseLeftButtonUp="OnListItemMouseSingleClick">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="FontSize" Value="12"/>
+                        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
                         <Style.Triggers>
+                            <Trigger Property="ListView.AlternationIndex" Value="0">
+                                <Setter Property="Background" Value="#f5f5f7"/>
+                            </Trigger>
+                            <Trigger Property="ListView.AlternationIndex" Value="1">
+                                <Setter Property="Background" Value="#f9f9fa"/>
+                            </Trigger>
                             <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#0078D7"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="Foreground" Value="Black"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>

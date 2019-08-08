@@ -53,8 +53,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyVersion("1.3.0.4")]
-[assembly: AssemblyFileVersion("1.3.0.4")]
+[assembly: AssemblyVersion("1.3.0.5")]
+[assembly: AssemblyFileVersion("1.3.0.5")]
 [assembly: AssemblyTitle("IntelliBox")]
-[assembly: AssemblyDescription("一、修改.net版本为4.5.2 二、增加样式")]
+[assembly: AssemblyDescription("1.修改样式，修改操作")]
 

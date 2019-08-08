@@ -22,6 +22,8 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
+
+using System;
 using System.Windows;
 
 namespace Examples {
@@ -30,7 +32,12 @@ namespace Examples {
 
         public MainWindow() {
             InitializeComponent();
+        }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Environment.Exit(0);
         }
     }
 }

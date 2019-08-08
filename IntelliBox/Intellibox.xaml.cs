@@ -575,21 +575,21 @@ namespace FeserWard.Controls {
             }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref="IntelliboxAlternateRowColorizer"/> used to color each row of the search result set.
-        /// Set to an instance of <see cref="IntelliboxRowColorizer"/> by default.
-        /// </summary>
-        public IntelliboxRowColorizer RowColorizer {
-            get {
-                return _rowColorizer;
-            }
-            set {
-                if (_rowColorizer != value) {
-                    _rowColorizer = value;
-                    OnRowColorizerChanged();
-                }
-            }
-        }
+        ///// <summary>
+        ///// Gets or sets the <see cref="IntelliboxAlternateRowColorizer"/> used to color each row of the search result set.
+        ///// Set to an instance of <see cref="IntelliboxRowColorizer"/> by default.
+        ///// </summary>
+        //public IntelliboxRowColorizer RowColorizer {
+        //    get {
+        //        return _rowColorizer;
+        //    }
+        //    set {
+        //        if (_rowColorizer != value) {
+        //            _rowColorizer = value;
+        //            OnRowColorizerChanged();
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// The Search provider that will actually perform the search
@@ -819,9 +819,9 @@ namespace FeserWard.Controls {
             OnSelectedValueBindingChanged();
             OnDisplayedValueBindingChanged();
 
-            RowColorizer = new IntelliboxAlternateRowColorizer() {
-                OddRowBrush = Brushes.Gainsboro
-            };
+            //RowColorizer = new IntelliboxAlternateRowColorizer() {
+            //    //OddRowBrush = Brushes.Gainsboro
+            //};
 
             this.DataContextChanged += new DependencyPropertyChangedEventHandler(Intellibox_DataContextChanged);
         }
@@ -1110,7 +1110,7 @@ namespace FeserWard.Controls {
             if (IsInitialized) {
                 var bind = new Binding() {
                     RelativeSource = RelativeSource.Self,
-                    Converter = RowColorizer
+                    //Converter = RowColorizer
                 };
 
                 var style = new Style(typeof(ListViewItem));
