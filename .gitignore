@@ -34,3 +34,4 @@ packages/**
 *.ncrunch*
 *.ndproj
 /.vs/IntelliBox/v16/Server/sqlite3
+/.vs/IntelliBox/v15/Server/sqlite3

@@ -18,7 +18,7 @@
 [assembly: global::System.Data.Objects.DataClasses.EdmRelationshipAttribute("NorthwindModel", "Products_FK00", "Suppliers", global::System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(IntelliboxL2E.Suppliers), "Products", global::System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(IntelliboxL2E.Products))]
 
 // 原始文件名:
-// 生成日期: 2019/7/22 15:04:45
+// 生成日期: 2019/8/14 10:30:57
 namespace IntelliboxL2E
 {
     
