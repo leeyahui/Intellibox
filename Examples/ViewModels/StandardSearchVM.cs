@@ -24,6 +24,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 using FeserWard.Controls;
+using System.Collections.Generic;
 
 namespace Examples.ViewModels
 {
@@ -41,6 +42,14 @@ namespace Examples.ViewModels
         public StandardSearchVM(IIntelliboxResultsProvider provider)
         {
             QueryProvider = provider;
+        }
+
+        public List<string> DataGridSource
+        {
+            get
+            {
+                return new List<string>() { "test1", "test2" };
+            }
         }
     }
 }

@@ -38,6 +38,7 @@ OTHER DEALINGS IN THE SOFTWARE.
             <RowDefinition Height="Auto" />
             <RowDefinition Height="20px" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -62,5 +63,26 @@ OTHER DEALINGS IN THE SOFTWARE.
                 SelectedItem="{Binding SelectedItem}"
                 SelectedValue="{Binding SelectedValue}"
             />
+        <DataGrid Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="test">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>liyahui</TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left"
+                            DataProvider="{Binding DataContext.QueryProvider,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            SelectedItem="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"
+                            SelectedValue="{Binding DataContext.SelectedValue,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

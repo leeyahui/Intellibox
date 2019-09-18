@@ -36,7 +36,8 @@ using System;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace FeserWard.Controls {
+namespace FeserWard.Controls
+{
     /// <summary>
     /// An implementation of the MS Access 'Lookup' field for WPF that uses the Provider pattern.
     /// <list type="bullet">
@@ -60,7 +61,8 @@ namespace FeserWard.Controls {
     ///     </item>
     /// </list>
     /// </summary>
-    public partial class Intellibox : UserControl {
+    public partial class Intellibox : UserControl
+    {
 
         private const int MinimumSearchDelayMS = 125;
 
@@ -173,7 +175,7 @@ namespace FeserWard.Controls {
         /// Identifies the <see cref="SelectedItemProperty"/> Dependancy Property.
         /// </summary>
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox), 
+            DependencyProperty.Register("SelectedItem", typeof(object), typeof(Intellibox),
                 new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnSelectedItemChanged)));
 
         /// <summary>
@@ -248,6 +250,7 @@ namespace FeserWard.Controls {
         };
 
         private ICommand _cancelAllSearches;
+        private ICommand _showAllSearches;
         private DateTime _lastTimeSearchRecievedUtc;
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
@@ -269,12 +272,30 @@ namespace FeserWard.Controls {
         /// <summary>
         /// Cancel all pending searches for the provider.
         /// </summary>
-        public ICommand CancelAllSearches {
-            get {
-                if (_cancelAllSearches == null) {
+        public ICommand CancelAllSearches
+        {
+            get
+            {
+                if (_cancelAllSearches == null)
+                {
                     _cancelAllSearches = new DelegateCommand(CancelSelection);
                 }
                 return _cancelAllSearches;
+            }
+        }
+
+        /// <summary>
+        /// show results
+        /// </summary>
+        public ICommand ShowAllResultsCommand
+        {
+            get
+            {
+                if (_showAllSearches == null)
+                {
+                    _showAllSearches = new DelegateCommand(OnShowAllResults);
+                }
+                return _showAllSearches;
             }
         }
 
@@ -283,7 +304,8 @@ namespace FeserWard.Controls {
         /// is set to true, then only the <see cref="IntelliboxColumn"/>s in this collection will be shown.
         /// Setting <see cref="HideColumnHeaders"/> to true will prevent column headers from being shown.
         /// </summary>
-        public IntelliboxColumnCollection Columns {
+        public IntelliboxColumnCollection Columns
+        {
             get;
             set;
         }
@@ -292,11 +314,14 @@ namespace FeserWard.Controls {
         /// This is the <see cref="IIntelliboxResultsProvider"/> that the <see cref="Intellibox"/> uses
         /// to ask for search results. This is a Dependancy Property.
         /// </summary>
-        public IIntelliboxResultsProvider DataProvider {
-            get {
+        public IIntelliboxResultsProvider DataProvider
+        {
+            get
+            {
                 return (IIntelliboxResultsProvider)GetValue(DataProviderProperty);
             }
-            set {
+            set
+            {
                 SetValue(DataProviderProperty, value);
             }
         }
@@ -305,7 +330,8 @@ namespace FeserWard.Controls {
         /// When True, the text in the search field will NOT be trimmed for
         /// whitespace prior to being passed to the <see cref="DataProvider"/>.
         /// </summary>
-        public bool DisableWhitespaceTrim {
+        public bool DisableWhitespaceTrim
+        {
             get;
             set;
         }
@@ -319,12 +345,16 @@ namespace FeserWard.Controls {
         /// its value in the text field.
         /// This is a Dependancy Property.
         /// </summary>
-        public BindingBase DisplayedValueBinding {
-            get {
+        public BindingBase DisplayedValueBinding
+        {
+            get
+            {
                 return _displayedValueBinding;
             }
-            set {
-                if (_displayedValueBinding != value) {
+            set
+            {
+                if (_displayedValueBinding != value)
+                {
                     _displayedValueBinding = value;
                     //the call is commented out so that people can type w/o the displayed value overwriting what they're trying to do
                     OnDisplayedValueBindingChanged();
@@ -332,20 +362,26 @@ namespace FeserWard.Controls {
             }
         }
 
-        private string DisplayTextFromHighlightedItem {
-            get {
+        private string DisplayTextFromHighlightedItem
+        {
+            get
+            {
                 return (string)GetValue(DisplayTextFromHighlightedItemProperty);
             }
-            set {
+            set
+            {
                 SetValue(DisplayTextFromHighlightedItemProperty, value);
             }
         }
 
-        private string DisplayTextFromSelectedItem {
-            get {
+        private string DisplayTextFromSelectedItem
+        {
+            get
+            {
                 return (string)GetValue(DisplayTextFromSelectedItemProperty);
             }
-            set {
+            set
+            {
                 SetValue(DisplayTextFromSelectedItemProperty, value);
             }
         }
@@ -355,19 +391,24 @@ namespace FeserWard.Controls {
         /// will display in the search results set. When False, all the columns in the search result set
         /// will show, but any columns in the <see cref="Columns"/> collection then override specific columns.
         /// </summary>
-        public bool ExplicitlyIncludeColumns {
+        public bool ExplicitlyIncludeColumns
+        {
             get;
             set;
         }
 
-        private bool HasDataProvider {
-            get {
+        private bool HasDataProvider
+        {
+            get
+            {
                 return DataProvider != null && SearchProvider != null;
             }
         }
 
-        private bool HasItems {
-            get {
+        private bool HasItems
+        {
+            get
+            {
                 return Items != null && Items.Count > 0;
             }
         }
@@ -375,11 +416,14 @@ namespace FeserWard.Controls {
         /// <summary>
         /// When True, columns in the search result set will not have headers. This is a Dependancy Property.
         /// </summary>
-        public bool HideColumnHeaders {
-            get {
+        public bool HideColumnHeaders
+        {
+            get
+            {
                 return (bool)GetValue(HideColumnHeadersProperty);
             }
-            set {
+            set
+            {
                 SetValue(HideColumnHeadersProperty, value);
             }
         }
@@ -388,8 +432,10 @@ namespace FeserWard.Controls {
         /// When true, means that the control is in 'Search' mode.
         /// i.e. that it is firing searches as the user types and waiting for results.
         /// </summary>
-        private bool IsSearchInProgress {
-            get {
+        private bool IsSearchInProgress
+        {
+            get
+            {
                 return SearchTimer != null;
             }
         }
@@ -398,20 +444,26 @@ namespace FeserWard.Controls {
         /// This is the binding target of the <see cref="SelectedValueBinding"/> property,
         /// so that users of the control can place their own bindings on the <see cref="SelectedValue"/> property.
         /// </summary>
-        private object IntermediateSelectedValue {
-            get {
+        private object IntermediateSelectedValue
+        {
+            get
+            {
                 return (object)GetValue(IntermediateSelectedValueProperty);
             }
-            set {
+            set
+            {
                 SetValue(IntermediateSelectedValueProperty, value);
             }
         }
 
-        private IList Items {
-            get {
+        private IList Items
+        {
+            get
+            {
                 return (IList)GetValue(ItemsProperty);
             }
-            set {
+            set
+            {
                 SetValue(ItemsProperty, value);
             }
         }
@@ -420,11 +472,14 @@ namespace FeserWard.Controls {
         /// Gets or sets the maximum number of results that the <see cref="Intellibox"/> asks
         /// its <see cref="IIntelliboxResultsProvider"/> for. This is a Dependancy Property.
         /// </summary>
-        public int MaxResults {
-            get {
+        public int MaxResults
+        {
+            get
+            {
                 return (int)GetValue(MaxResultsProperty);
             }
-            set {
+            set
+            {
                 SetValue(MaxResultsProperty, value);
             }
         }
@@ -435,11 +490,14 @@ namespace FeserWard.Controls {
         /// additional searches are performed (assumming that additional text has been entered).
         /// Minimum value is 1 (one). Defaults to 1 (one);
         /// </summary>
-        public int MinimumPrefixLength {
-            get {
+        public int MinimumPrefixLength
+        {
+            get
+            {
                 return (int)GetValue(MinimumPrefixLengthProperty);
             }
-            set {
+            set
+            {
                 SetValue(MinimumPrefixLengthProperty, value);
             }
         }
@@ -448,11 +506,14 @@ namespace FeserWard.Controls {
         /// The number of milliseconds the <see cref="Intellibox"/> control will wait between searches
         /// when the user is rapidly entering text. Minimum is 125 milliseconds. Defaults to 250 milliseconds.
         /// </summary>
-        public int MinimumSearchDelay {
-            get {
+        public int MinimumSearchDelay
+        {
+            get
+            {
                 return (int)GetValue(MinimumSearchDelayProperty);
             }
-            set {
+            set
+            {
                 SetValue(MinimumSearchDelayProperty, value);
             }
         }
@@ -476,11 +537,14 @@ namespace FeserWard.Controls {
         /// <summary>
         /// The number of rows to scroll up or down when a user uses the Page Up or Page Down key.
         /// </summary>
-        public int PagingScrollRows {
-            get {
+        public int PagingScrollRows
+        {
+            get
+            {
                 return (int)GetValue(PagingScrollRowsProperty);
             }
-            set {
+            set
+            {
                 SetValue(PagingScrollRowsProperty, value);
             }
         }
@@ -489,8 +553,10 @@ namespace FeserWard.Controls {
         /// Internal Use Only. Do Not Use. This property exists so that the <see cref="Intellibox"/>
         /// can run in partial-trust;
         /// </summary>
-        public ListView ResultsList {
-            get {
+        public ListView ResultsList
+        {
+            get
+            {
                 return lstSearchItems;
             }
         }
@@ -500,11 +566,14 @@ namespace FeserWard.Controls {
         /// The default value is 200.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsHeight {
-            get {
+        public double ResultsHeight
+        {
+            get
+            {
                 return (double)GetValue(ResultsHeightProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsHeightProperty, value);
             }
         }
@@ -513,11 +582,14 @@ namespace FeserWard.Controls {
         /// Gets or sets the maximum height that the search results popup is allowed to have.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsMaxHeight {
-            get {
+        public double ResultsMaxHeight
+        {
+            get
+            {
                 return (double)GetValue(ResultsMaxHeightProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsMaxHeightProperty, value);
             }
         }
@@ -526,11 +598,14 @@ namespace FeserWard.Controls {
         /// Gets or sets the maximum width that the search results popup is allowed to have.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsMaxWidth {
-            get {
+        public double ResultsMaxWidth
+        {
+            get
+            {
                 return (double)GetValue(ResultsMaxWidthProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsMaxWidthProperty, value);
             }
         }
@@ -539,11 +614,14 @@ namespace FeserWard.Controls {
         /// Gets or sets the minimum height that the search results popup is allowed to have.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsMinHeight {
-            get {
+        public double ResultsMinHeight
+        {
+            get
+            {
                 return (double)GetValue(ResultsMinHeightProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsMinHeightProperty, value);
             }
         }
@@ -552,11 +630,14 @@ namespace FeserWard.Controls {
         /// Gets or sets the minimum width that the search results popup is allowed to have.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsMinWidth {
-            get {
+        public double ResultsMinWidth
+        {
+            get
+            {
                 return (double)GetValue(ResultsMinWidthProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsMinWidthProperty, value);
             }
         }
@@ -566,11 +647,14 @@ namespace FeserWard.Controls {
         /// The default value is 400.
         /// This is a Dependancy Property.
         /// </summary>
-        public double ResultsWidth {
-            get {
+        public double ResultsWidth
+        {
+            get
+            {
                 return (double)GetValue(ResultsWidthProperty);
             }
-            set {
+            set
+            {
                 SetValue(ResultsWidthProperty, value);
             }
         }
@@ -594,7 +678,8 @@ namespace FeserWard.Controls {
         /// <summary>
         /// The Search provider that will actually perform the search
         /// </summary>
-        private IntelliboxAsyncProvider SearchProvider {
+        private IntelliboxAsyncProvider SearchProvider
+        {
             get;
             set;
         }
@@ -603,7 +688,8 @@ namespace FeserWard.Controls {
         /// Using a dispatcher timer so that the 'Tick' event gets posted on the UI thread and
         /// we don't have to worry about exceptions throwing when accessing UI controls.
         /// </summary>
-        private DispatcherTimer SearchTimer {
+        private DispatcherTimer SearchTimer
+        {
             get;
             set;
         }
@@ -611,7 +697,8 @@ namespace FeserWard.Controls {
         /// <summary>
         /// When true, all of the text in the field will be selected when the control gets focus.
         /// </summary>
-        public bool SelectAllOnFocus {
+        public bool SelectAllOnFocus
+        {
             get;
             set;
         }
@@ -620,11 +707,14 @@ namespace FeserWard.Controls {
         /// The data row from the search result set that the user has most recently selected and confirmed.
         /// This is a Dependancy Property.
         /// </summary>
-        public object SelectedItem {
-            get {
+        public object SelectedItem
+        {
+            get
+            {
                 return (object)GetValue(SelectedItemProperty);
             }
-            set {
+            set
+            {
                 SetValue(SelectedItemProperty, value);
             }
         }
@@ -633,11 +723,14 @@ namespace FeserWard.Controls {
         /// A value out of the <see cref="SelectedItem"/>. The exact value depends on
         /// the <see cref="SelectedValueBinding"/> property. This is a Dependancy Property.
         /// </summary>
-        public object SelectedValue {
-            get {
+        public object SelectedValue
+        {
+            get
+            {
                 return (object)GetValue(SelectedValueProperty);
             }
-            set {
+            set
+            {
                 SetValue(SelectedValueProperty, value);
             }
         }
@@ -650,12 +743,16 @@ namespace FeserWard.Controls {
         /// value displayed in the text field.
         /// This is a Dependancy Property.
         /// </summary>
-        public BindingBase SelectedValueBinding {
-            get {
+        public BindingBase SelectedValueBinding
+        {
+            get
+            {
                 return _selectedValueBinding;
             }
-            set {
-                if (_selectedValueBinding != value) {
+            set
+            {
+                if (_selectedValueBinding != value)
+                {
                     _selectedValueBinding = value;
                     OnSelectedValueBindingChanged();
                 }
@@ -665,20 +762,26 @@ namespace FeserWard.Controls {
         /// <summary>
         /// When <see cref="true"/> query results that have only a single result will will be automatically selected.
         /// </summary>
-        public bool AutoSelectSingleResult {
-            get {
+        public bool AutoSelectSingleResult
+        {
+            get
+            {
                 return (bool)GetValue(AutoSelectSingleResultProperty);
             }
-            set {
+            set
+            {
                 SetValue(AutoSelectSingleResultProperty, value);
             }
         }
 
-        private bool ShowResults {
-            get {
+        private bool ShowResults
+        {
+            get
+            {
                 return (bool)GetValue(ShowResultsProperty);
             }
-            set {
+            set
+            {
                 SetValue(ShowResultsProperty, value);
             }
         }
@@ -688,16 +791,20 @@ namespace FeserWard.Controls {
         /// will wait for results to come back before showing the user a "Waiting for results" message.
         /// Minimum: 0ms, Default: 125ms
         /// </summary>
-        public int TimeBeforeWaitNotification {
-            get {
+        public int TimeBeforeWaitNotification
+        {
+            get
+            {
                 return (int)GetValue(TimeBeforeWaitNotificationProperty);
             }
-            set {
+            set
+            {
                 SetValue(TimeBeforeWaitNotificationProperty, value);
             }
         }
 
-        private DispatcherTimer WaitNotificationTimer {
+        private DispatcherTimer WaitNotificationTimer
+        {
             get;
             set;
         }
@@ -705,11 +812,14 @@ namespace FeserWard.Controls {
         /// <summary>
         /// Sets the background <see cref="Brush"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
-        public Brush WatermarkBackground {
-            get {
+        public Brush WatermarkBackground
+        {
+            get
+            {
                 return (Brush)GetValue(WatermarkBackgroundProperty);
             }
-            set {
+            set
+            {
                 SetValue(WatermarkBackgroundProperty, value);
             }
         }
@@ -718,11 +828,14 @@ namespace FeserWard.Controls {
         /// Sets the <see cref="FontStyle"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// Default is <see cref="FontStyles.Italic"/>.
         /// </summary>
-        public FontStyle WatermarkFontStyle {
-            get {
+        public FontStyle WatermarkFontStyle
+        {
+            get
+            {
                 return (FontStyle)GetValue(WatermarkFontStyleProperty);
             }
-            set {
+            set
+            {
                 SetValue(WatermarkFontStyleProperty, value);
             }
         }
@@ -730,11 +843,14 @@ namespace FeserWard.Controls {
         /// <summary>
         /// Sets the <see cref="FontWeight"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// </summary>
-        public FontWeight WatermarkFontWeight {
-            get {
+        public FontWeight WatermarkFontWeight
+        {
+            get
+            {
                 return (FontWeight)GetValue(WatermarkFontWeightProperty);
             }
-            set {
+            set
+            {
                 SetValue(WatermarkFontWeightProperty, value);
             }
         }
@@ -743,11 +859,14 @@ namespace FeserWard.Controls {
         /// Sets the foreground <see cref="Brush"/> of the <see cref="WatermarkText"/> when it is displayed.
         /// Default is <see cref="Colors.Gray"/>.
         /// </summary>
-        public Brush WatermarkForeground {
-            get {
+        public Brush WatermarkForeground
+        {
+            get
+            {
                 return (Brush)GetValue(WatermarkForegroundProperty);
             }
-            set {
+            set
+            {
                 SetValue(WatermarkForegroundProperty, value);
             }
         }
@@ -755,17 +874,22 @@ namespace FeserWard.Controls {
         /// <summary>
         /// Sets the text that is displayed when the <see cref="Intellibox"/> doesn't have focus or any entered content.
         /// </summary>
-        public string WatermarkText {
-            get {
+        public string WatermarkText
+        {
+            get
+            {
                 return (string)GetValue(WatermarkTextProperty);
             }
-            set {
+            set
+            {
                 SetValue(WatermarkTextProperty, value);
             }
         }
 
-        private Style ZeroHeightColumnHeader {
-            get {
+        private Style ZeroHeightColumnHeader
+        {
+            get
+            {
                 var noHeader = new Style(typeof(GridViewColumnHeader));
                 noHeader.Setters.Add(new Setter(GridViewColumnHeader.HeightProperty, 0.0));
                 return noHeader;
@@ -796,7 +920,8 @@ namespace FeserWard.Controls {
         /// If <see cref="DisableWhitespaceTrim"/> is true, returns <paramref name="input"/> unmodified.
         /// Otherwise the function returns the result of input.Trim(), or string.Empty if input is null.
         /// </returns>
-        private string ApplyDisableWhitespaceTrim(string input) {
+        private string ApplyDisableWhitespaceTrim(string input)
+        {
             // if the entered text isn't supposed to be trimmed, then use it as-is
             // otherwise Trim() it if it's not null, or set to string.Empty if it is null
             return DisableWhitespaceTrim
@@ -808,7 +933,8 @@ namespace FeserWard.Controls {
         /// Initializes the <see cref="Intellibox" />, preparing it to accept data entry
         /// and retrieve results from the <see cref="DataProvider"/>.
         /// </summary>
-        public Intellibox() {
+        public Intellibox()
+        {
             InitializeComponent();
 
             _lastTimeSearchRecievedUtc = DateTime.Now.ToUniversalTime(); // make sure the field is never null
@@ -826,30 +952,40 @@ namespace FeserWard.Controls {
             this.DataContextChanged += new DependencyPropertyChangedEventHandler(Intellibox_DataContextChanged);
         }
 
-        void Intellibox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e) {
-
+        void Intellibox_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
             var expr = this.GetBindingExpression(SelectedItemProperty);
-            if (expr == null) {
+            if (expr == null)
+            {
                 SelectedItem = null;
             }
 
             expr = this.GetBindingExpression(SelectedValueProperty);
-            if (expr == null) {
+            if (expr == null)
+            {
                 SelectedValue = null;
             }
         }
 
-        private void CancelSelection() {
+        private void CancelSelection()
+        {
             _lastTextValue = UpdateSearchBoxText(true);
 
             OnUserEndedSearchEvent();
 
-            if (Items != null) {
+            if (Items != null)
+            {
                 Items = null;
             }
         }
 
-        private static object CoerceMinimumPrefixLengthProperty(DependencyObject reciever, object val) {
+        private void OnShowAllResults()
+        {
+            CreateSearch(string.Empty);
+        }
+
+        private static object CoerceMinimumPrefixLengthProperty(DependencyObject reciever, object val)
+        {
             var intval = (int)val;
             if (intval < 1)
                 intval = 1;
@@ -857,7 +993,8 @@ namespace FeserWard.Controls {
             return intval;
         }
 
-        private static object CoerceMinimumSearchDelayProperty(DependencyObject reciever, object val) {
+        private static object CoerceMinimumSearchDelayProperty(DependencyObject reciever, object val)
+        {
             var intval = (int)val;
             if (intval < MinimumSearchDelayMS)
                 intval = MinimumSearchDelayMS;
@@ -865,32 +1002,38 @@ namespace FeserWard.Controls {
             return intval;
         }
 
-        private static object CoerceTimeBeforeWaitNotificationProperty(DependencyObject reciever, object val) {
+        private static object CoerceTimeBeforeWaitNotificationProperty(DependencyObject reciever, object val)
+        {
             return (int)val < 0 ? 0 : val;
         }
 
-        private void ChooseCurrentItem() {
+        private void ChooseCurrentItem()
+        {
             this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
 
             _lastTextValue = UpdateSearchBoxText(true);
 
             OnUserEndedSearchEvent();
 
-            if (Items != null) {
+            if (Items != null)
+            {
                 Items = null;
             }
         }
 
-        private GridView ConstructGridView(object item) {
+        private GridView ConstructGridView(object item)
+        {
             var view = new GridView();
 
             bool isBaseType = IsBaseType(item);
 
-            if (isBaseType || HideColumnHeaders) {
+            if (isBaseType || HideColumnHeaders)
+            {
                 view.ColumnHeaderContainerStyle = ZeroHeightColumnHeader;
             }
 
-            if (isBaseType) {
+            if (isBaseType)
+            {
                 var gvc = new GridViewColumn();
                 gvc.Header = item.GetType().Name;
 
@@ -900,8 +1043,10 @@ namespace FeserWard.Controls {
                 return view;
             }
 
-            if (ExplicitlyIncludeColumns && Columns != null && Columns.Count > 0) {
-                foreach (var col in Columns.Where(c => !c.Hide).OrderBy(c => c.Position ?? int.MaxValue)) {
+            if (ExplicitlyIncludeColumns && Columns != null && Columns.Count > 0)
+            {
+                foreach (var col in Columns.Where(c => !c.Hide).OrderBy(c => c.Position ?? int.MaxValue))
+                {
                     view.Columns.Add(CloneHelper.Clone(col));
                 }
                 return view;
@@ -909,7 +1054,8 @@ namespace FeserWard.Controls {
 
             var typeProperties = (from p in item.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
                                   where p.CanRead && p.CanWrite
-                                  select new {
+                                  select new
+                                  {
                                       Name = p.Name,
                                       Column = Columns.FirstOrDefault(c => p.Name.Equals(c.ForProperty))
                                   }).ToList();
@@ -923,23 +1069,29 @@ namespace FeserWard.Controls {
 
             var sortedProperties = typesWithPositions.Concat(typesWithoutPositions);
 
-            foreach (var currentProperty in sortedProperties) {
-                if (currentProperty.Column != null) {
-                    if (!currentProperty.Column.Hide) {
+            foreach (var currentProperty in sortedProperties)
+            {
+                if (currentProperty.Column != null)
+                {
+                    if (!currentProperty.Column.Hide)
+                    {
                         var gvc = CloneHelper.Clone(currentProperty.Column);
 
-                        if (gvc.Header == null) { // TODO check if this is bound to anything
+                        if (gvc.Header == null)
+                        { // TODO check if this is bound to anything
                             gvc.Header = currentProperty.Name;
                         }
 
-                        if (gvc.DisplayMemberBinding == null) {
+                        if (gvc.DisplayMemberBinding == null)
+                        {
                             gvc.DisplayMemberBinding = new Binding(currentProperty.Name);
                         }
 
                         view.Columns.Add(gvc);
                     }
                 }
-                else {
+                else
+                {
                     var gvc = new GridViewColumn();
                     gvc.Header = currentProperty.Name;
 
@@ -951,8 +1103,10 @@ namespace FeserWard.Controls {
             return view;
         }
 
-        private int GetIncrementValueForKey(Key pressed) {
-            switch (pressed) {
+        private int GetIncrementValueForKey(Key pressed)
+        {
+            switch (pressed)
+            {
                 case Key.Down:
                 case Key.Up:
                 case Key.NumPad8:
@@ -967,8 +1121,10 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void HighlightNextItem(Key pressed) {
-            if (ResultsList != null && HasItems) {
+        private void HighlightNextItem(Key pressed)
+        {
+            if (ResultsList != null && HasItems)
+            {
                 //I used this solution partially
                 //http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
                 //the only way I have been able to solve the lockups is to use the background priority
@@ -986,7 +1142,8 @@ namespace FeserWard.Controls {
         /// http://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=324064
         /// </para>
         /// </summary>
-        private void HighlightNewItem(Key pressed) {
+        private void HighlightNewItem(Key pressed)
+        {
             var goDown = pressed == Key.Tab || pressed == Key.Down || pressed == Key.NumPad2 || pressed == Key.PageDown;
             var nextIndex = goDown
                 ? ResultsList.SelectedIndex + GetIncrementValueForKey(pressed)
@@ -994,14 +1151,16 @@ namespace FeserWard.Controls {
 
             int maxIndex = Items.Count - 1; //dangerous, since the list could be really large
 
-            if (nextIndex < 0) {
+            if (nextIndex < 0)
+            {
                 if (ResultsList.SelectedIndex != 0)
                     nextIndex = 0;
                 else
                     nextIndex = maxIndex;
             }
 
-            if (nextIndex >= maxIndex) {
+            if (nextIndex >= maxIndex)
+            {
                 if (ResultsList.SelectedIndex != maxIndex)
                     nextIndex = maxIndex;
                 else
@@ -1014,20 +1173,24 @@ namespace FeserWard.Controls {
             ResultsList.ScrollIntoView(selectedItem);
         }
 
-        private bool IsBaseType(object item) {
+        private bool IsBaseType(object item)
+        {
             var type = item.GetType();
             return _baseTypes.Any(i => i == type);
         }
 
-        private bool IsCancelKey(Key key) {
+        private bool IsCancelKey(Key key)
+        {
             return key == Key.Escape;
         }
 
-        private bool IsChooseCurrentItemKey(Key pressed) {
+        private bool IsChooseCurrentItemKey(Key pressed)
+        {
             return pressed == Key.Enter || pressed == Key.Return || pressed == Key.Tab;
         }
 
-        private bool IsNavigationKey(Key pressed) {
+        private bool IsNavigationKey(Key pressed)
+        {
             var numLockOn = (Keyboard.GetKeyStates(Key.NumLock) == KeyStates.Toggled);
             return pressed == Key.Down
                 || pressed == Key.Up
@@ -1041,16 +1204,24 @@ namespace FeserWard.Controls {
         /// Set the last value and Call OnSearchBeginning and BeginSearchAsync
         /// </summary>
         /// <param name="current">The last typed in value</param>
-        private void CreateSearch(string current) {
+        private void CreateSearch(string current)
+        {
             _lastTextValue = current;
             OnSearchBeginning(current, MaxResults, Tag);
+            if (SearchProvider == null)
+            {
+                throw new Exception("SearchProvider is empty");
+            }
             SearchProvider.BeginSearchAsync(current, DateTime.Now.ToUniversalTime(), MaxResults, Tag, ProcessSearchResults);
         }
 
-        private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+        private static void OnDataProviderChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
+        {
             var ib = receiver as Intellibox;
-            if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider) {
-                if (ib.SearchProvider != null) {
+            if (ib != null && args != null && args.NewValue is IIntelliboxResultsProvider)
+            {
+                if (ib.SearchProvider != null)
+                {
                     ib.SearchProvider.CancelAllSearches();
                 }
 
@@ -1060,8 +1231,10 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void OnDisplayedValueBindingChanged() {
-            if (ResultsList != null) {
+        private void OnDisplayedValueBindingChanged()
+        {
+            if (ResultsList != null)
+            {
                 this.SetBinding(Intellibox.DisplayTextFromHighlightedItemProperty,
                     BindingBaseFactory.ConstructBindingForHighlighted(this, DisplayedValueBinding));
             }
@@ -1070,7 +1243,8 @@ namespace FeserWard.Controls {
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 
-        private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args) {
+        private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
+        {
 
         }
 
@@ -1088,7 +1262,8 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void OnListItemMouseSingleClick(object sender, MouseButtonEventArgs e) {
+        private void OnListItemMouseSingleClick(object sender, MouseButtonEventArgs e)
+        {
             if (SingleClickToSelectResult)
                 ChooseCurrentItem();
         }
@@ -1106,9 +1281,12 @@ namespace FeserWard.Controls {
                 ChooseCurrentItem();
         }
 
-        private void OnRowColorizerChanged() {
-            if (IsInitialized) {
-                var bind = new Binding() {
+        private void OnRowColorizerChanged()
+        {
+            if (IsInitialized)
+            {
+                var bind = new Binding()
+                {
                     RelativeSource = RelativeSource.Self,
                     //Converter = RowColorizer
                 };
@@ -1127,10 +1305,12 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void OnSearchBeginning(string term, int max, object data) {
+        private void OnSearchBeginning(string term, int max, object data)
+        {
             // we don't want to re-start the timer if it's already been started
             // or if results are showing
-            if (WaitNotificationTimer == null && !ShowResults) {
+            if (WaitNotificationTimer == null && !ShowResults)
+            {
                 WaitNotificationTimer = new DispatcherTimer(
                             TimeSpan.FromMilliseconds(TimeBeforeWaitNotification),
                             DispatcherPriority.Background,
@@ -1141,14 +1321,17 @@ namespace FeserWard.Controls {
             }
 
             var e = SearchBeginning;
-            if (e != null) {
+            if (e != null)
+            {
                 e(term, max, data);
             }
         }
 
-        private void OnSearchCompleted() {
+        private void OnSearchCompleted()
+        {
             var e = SearchCompleted;
-            if (e != null) {
+            if (e != null)
+            {
                 e();
             }
         }
@@ -1159,20 +1342,24 @@ namespace FeserWard.Controls {
         /// 2. decided not to select an item from the result set
         /// 3. cleared the currently selected item
         /// </summary>
-        private void OnUserEndedSearchEvent() {
-            if (SearchTimer != null) {
+        private void OnUserEndedSearchEvent()
+        {
+            if (SearchTimer != null)
+            {
                 SearchTimer.Stop();
                 //setting to null so that when a new search starts, we grab fresh values for the time interval
                 SearchTimer = null;
             }
 
-            if (WaitNotificationTimer != null) {
+            if (WaitNotificationTimer != null)
+            {
                 WaitNotificationTimer.Stop();
                 //setting to null so that when a new search starts, we grab fresh values for the time interval
                 WaitNotificationTimer = null;
             }
 
-            if (SearchProvider != null) {
+            if (SearchProvider != null)
+            {
                 SearchProvider.CancelAllSearches();
             }
 
@@ -1181,8 +1368,10 @@ namespace FeserWard.Controls {
             waitingForResultsPopup.IsOpen = false;
         }
 
-        private void OnSearchTimerTick(object sender, EventArgs e) {
-            if (IsSearchInProgress) {
+        private void OnSearchTimerTick(object sender, EventArgs e)
+        {
+            if (IsSearchInProgress)
+            {
                 var last = ApplyDisableWhitespaceTrim(_lastTextValue);
                 var current = ApplyDisableWhitespaceTrim(PART_EDITFIELD.Text);
 
@@ -1190,46 +1379,55 @@ namespace FeserWard.Controls {
                 // empty search strings to cancel existing searches, because that responsibility
                 // belongs to the the code that kicks off the first search
                 bool startAnotherSearch = !last.Equals(current) && !string.IsNullOrEmpty(current);
-                if (startAnotherSearch) {
+                if (startAnotherSearch)
+                {
                     CreateSearch(current);
                 }
             }
         }
 
-        private void OnSelectedValueBindingChanged() {
+        private void OnSelectedValueBindingChanged()
+        {
             var bind = BindingBaseFactory.ConstructBindingForSelected(this, SelectedValueBinding);
             this.SetBinding(IntermediateSelectedValueProperty, bind);
         }
 
-        private void OnTextBoxKeyUp(object sender, KeyEventArgs e) {
+        private void OnTextBoxKeyUp(object sender, KeyEventArgs e)
+        {
             if (!HasDataProvider)
                 return;
 
-            if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key)) {
+            if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key))
+            {
                 return;
             }
 
             var field = sender as TextBox;
-            if (field != null) {
+            if (field != null)
+            {
                 PerformSearchActions(field.Text);
             }
         }
 
-        private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e) {
+        private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
+        {
             if (!HasDataProvider || !ShowResults)
                 return;
 
-            if (IsCancelKey(e.Key)) {
+            if (IsCancelKey(e.Key))
+            {
                 CancelSelection();
                 return;
             }
 
-            if (IsChooseCurrentItemKey(e.Key)) {
+            if (IsChooseCurrentItemKey(e.Key))
+            {
                 ChooseCurrentItem();
                 return;
             }
 
-            if (IsNavigationKey(e.Key)) {
+            if (IsNavigationKey(e.Key))
+            {
                 HighlightNextItem(e.Key);
                 e.Handled = true;
             }
@@ -1240,19 +1438,23 @@ namespace FeserWard.Controls {
             TextChanged?.Invoke(sender, e);
         }
 
-        private void PerformSearchActions(string enteredText) {
+        private void PerformSearchActions(string enteredText)
+        {
             enteredText = ApplyDisableWhitespaceTrim(enteredText);
 
             if (enteredText.Equals(_lastTextValue))
                 return;
 
-            if (string.IsNullOrEmpty(enteredText)) {
+            if (string.IsNullOrEmpty(enteredText))
+            {
                 this.SelectedItem = null;
                 OnUserEndedSearchEvent();
             }
-            else {
+            else
+            {
                 bool doSearchNow = !IsSearchInProgress && enteredText.Length >= MinimumPrefixLength;
-                if (doSearchNow) {
+                if (doSearchNow)
+                {
                     SearchTimer = new DispatcherTimer(
                         TimeSpan.FromMilliseconds(MinimumSearchDelay),
                         DispatcherPriority.Background,
@@ -1265,8 +1467,10 @@ namespace FeserWard.Controls {
             }
         }
 
-        private void OnWaitNotificationTimerTick(object sender, EventArgs args) {
-            if (WaitNotificationTimer != null) {
+        private void OnWaitNotificationTimerTick(object sender, EventArgs args)
+        {
+            if (WaitNotificationTimer != null)
+            {
                 WaitNotificationTimer.Stop();
             }
 
@@ -1275,7 +1479,8 @@ namespace FeserWard.Controls {
 
             //determine if we have any active searches
             var activeSearches = false;
-            if (SearchProvider != null && SearchProvider.HasActiveSearches) {
+            if (SearchProvider != null && SearchProvider.HasActiveSearches)
+            {
                 activeSearches = true;
             }
 
@@ -1287,7 +1492,8 @@ namespace FeserWard.Controls {
         /// </summary>
         /// <param name="startTimeUtc"></param>
         /// <param name="results"></param>
-        private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable results) {
+        private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable results)
+        {
             if (_lastTimeSearchRecievedUtc > startTimeUtc)
                 return; // this result set isn't fresh, so don't bother processing it
 
@@ -1304,56 +1510,71 @@ namespace FeserWard.Controls {
 
             noResultsPopup.IsOpen = Items.Count < 1;
 
-            if (Items.Count > 0) {
+            if (Items.Count > 0)
+            {
                 // recreate the GridView for each result set so that the column widths are recalculated
                 ResultsList.View = ConstructGridView(Items[0]);
                 ResultsList.SelectedIndex = 0;
                 ShowResults = true;
             }
 
-			if (AutoSelectSingleResult && Items.Count == 1) {
-				ResultsList.SelectedItem = Items[0];
-				ChooseCurrentItem();
-				ShowResults = false;
-			}
+            if (AutoSelectSingleResult && Items.Count == 1)
+            {
+                ResultsList.SelectedItem = Items[0];
+                ChooseCurrentItem();
+                ShowResults = false;
+            }
 
             OnSearchCompleted();
         }
 
-        private string UpdateSearchBoxText(bool useSelectedItem) {
+        private string UpdateSearchBoxText(bool useSelectedItem)
+        {
 
             var text = useSelectedItem
                 ? this.DisplayTextFromSelectedItem
                 : this.DisplayTextFromHighlightedItem;
 
             PART_EDITFIELD.Text = text;
-            if (!string.IsNullOrEmpty(text)) {
+            if (!string.IsNullOrEmpty(text))
+            {
                 PART_EDITFIELD.CaretIndex = text.Length;
             }
 
             return text;
         }
 
-        public new bool Focus() {
+        /// <summary>
+        /// get focus
+        /// </summary>
+        /// <returns></returns>
+        public new bool Focus()
+        {
             return PART_EDITFIELD.Focus();
         }
 
-        private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e) {
-            if (SelectAllOnFocus) {
+        private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (SelectAllOnFocus)
+            {
                 PART_EDITFIELD.SelectAll();
             }
         }
 
-        private void lstSearchItems_PreviewKeyDown(object sender, KeyEventArgs e) {
-            if (IsCancelKey(e.Key)) {
+        private void lstSearchItems_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (IsCancelKey(e.Key))
+            {
                 CancelSelection();
                 return;
             }
         }
 
-        private void Popup_PreviewMouseButton(object sender, MouseButtonEventArgs e) {
+        private void Popup_PreviewMouseButton(object sender, MouseButtonEventArgs e)
+        {
             var pop = sender as System.Windows.Controls.Primitives.Popup;
-            if (pop != null && pop.IsOpen == false) {
+            if (pop != null && pop.IsOpen == false)
+            {
                 CancelSelection();
             }
         }
