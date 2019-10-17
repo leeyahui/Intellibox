@@ -68,7 +68,12 @@ namespace Examples.SearchProviders
             }
             else
             {
-                return _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults);
+                var result = _results.Where(term => term.StartsWith(searchTerm)).Take(maxResults);
+                if (result.Count() == 0)
+                {
+                    return new List<string> { searchTerm, searchTerm, searchTerm, searchTerm, searchTerm };
+                }
+                return result;
             }
         }
     }

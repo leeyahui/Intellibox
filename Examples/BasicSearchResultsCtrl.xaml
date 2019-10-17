@@ -59,26 +59,25 @@ OTHER DEALINGS IN THE SOFTWARE.
         <auto:Intellibox 
                 Grid.Row="5" Grid.Column="2"
                 Width="200" Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left"
+            SingleClickToSelectResult="True"
                 DataProvider="{Binding QueryProvider}"
                 SelectedItem="{Binding SelectedItem}"
                 SelectedValue="{Binding SelectedValue}"
             />
-        <DataGrid Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False">
+        <DataGrid Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="test">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock>liyahui</TextBlock>
+                            <TextBlock Text="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left"
+                            <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left" SingleClickToSelectResult="True" MinimumPrefixLength="0"
                             DataProvider="{Binding DataContext.QueryProvider,RelativeSource={RelativeSource AncestorType=UserControl}}"
                             SelectedItem="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"
                             SelectedValue="{Binding DataContext.SelectedValue,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
-                            </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>

@@ -54,6 +54,7 @@
     <DocumentationFile>..\Debug\Intellibox.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>1591;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -81,6 +82,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
@@ -104,6 +109,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="FilePathSearchProvider.cs" />
+    <Compile Include="PopupTopmostBehavior.cs" />
     <Compile Include="WatermarkTextVisibilityConverter.cs" />
     <Compile Include="Intellibox.xaml.cs">
       <DependentUpon>Intellibox.xaml</DependentUpon>

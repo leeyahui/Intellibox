@@ -255,7 +255,7 @@ namespace FeserWard.Controls
         private string _lastTextValue;
         private BindingBase _selectedValueBinding;
         private BindingBase _displayedValueBinding;
-        private IntelliboxRowColorizer _rowColorizer;
+        //private IntelliboxRowColorizer _rowColorizer;
 
         /// <summary>
         /// This event is fired immediately before a new search is started.
@@ -981,7 +981,7 @@ namespace FeserWard.Controls
 
         private void OnShowAllResults()
         {
-            CreateSearch(string.Empty);
+            CreateSearch(PART_EDITFIELD.Text);
         }
 
         private static object CoerceMinimumPrefixLengthProperty(DependencyObject reciever, object val)
@@ -1544,14 +1544,14 @@ namespace FeserWard.Controls
             return text;
         }
 
-        /// <summary>
-        /// get focus
-        /// </summary>
-        /// <returns></returns>
-        public new bool Focus()
-        {
-            return PART_EDITFIELD.Focus();
-        }
+        ///// <summary>
+        ///// get focus
+        ///// </summary>
+        ///// <returns></returns>
+        //public new bool Focus()
+        //{
+        //    return PART_EDITFIELD.Focus();
+        //}
 
         private void PART_EDITFIELD_GotFocus(object sender, RoutedEventArgs e)
         {
