@@ -1282,29 +1282,29 @@ namespace FeserWard.Controls
                 ChooseCurrentItem();
         }
 
-        private void OnRowColorizerChanged()
-        {
-            if (IsInitialized)
-            {
-                var bind = new Binding()
-                {
-                    RelativeSource = RelativeSource.Self,
-                    //Converter = RowColorizer
-                };
+        //private void OnRowColorizerChanged()
+        //{
+        //    if (IsInitialized)
+        //    {
+        //        var bind = new Binding()
+        //        {
+        //            RelativeSource = RelativeSource.Self,
+        //            //Converter = RowColorizer
+        //        };
 
-                var style = new Style(typeof(ListViewItem));
-                style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
+        //        var style = new Style(typeof(ListViewItem));
+        //        style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
 
-                var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
-                style.Setters.Add(settSingleClick);
-                var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
-                style.Setters.Add(settDoubleClick);
-                var settKeyDown = new EventSetter(ListViewItem.KeyDownEvent, new KeyEventHandler(OnListItemKeyDown));
-                style.Setters.Add(settKeyDown);
+        //        var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
+        //        style.Setters.Add(settSingleClick);
+        //        var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
+        //        style.Setters.Add(settDoubleClick);
+        //        var settKeyDown = new EventSetter(ListViewItem.KeyDownEvent, new KeyEventHandler(OnListItemKeyDown));
+        //        style.Setters.Add(settKeyDown);
 
-                Resources[typeof(ListViewItem)] = style;
-            }
-        }
+        //        Resources[typeof(ListViewItem)] = style;
+        //    }
+        //}
 
         private void OnSearchBeginning(string term, int max, object data)
         {

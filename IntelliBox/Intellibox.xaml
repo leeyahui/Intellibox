@@ -54,7 +54,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
-                            <Border CornerRadius="2" BorderThickness="0.5" BorderBrush="#FF969696">
+                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="#FF969696">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -97,9 +97,9 @@ OTHER DEALINGS IN THE SOFTWARE.
             </Style>
 
             <local:WatermarkTextVisibilityConverter x:Key="watermarkVisibilityConverter" />
-            <!--<ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/IntelliBox;component/Themes/ListView.xaml"/>
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -157,7 +157,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                       VirtualizingStackPanel.IsVirtualizing="True"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
                       PreviewKeyDown="lstSearchItems_PreviewKeyDown" MouseDoubleClick="OnListItemMouseDoubleClick" PreviewMouseLeftButtonUp="OnListItemMouseSingleClick">
-                <ListView.ItemContainerStyle>
+                <!--<ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}">
                         <Setter Property="FontSize" Value="12"/>
                         <Setter Property="FontFamily" Value="Microsoft YaHei"/>
@@ -178,7 +178,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                             </Trigger>
                         </Style.Triggers>
                     </Style>
-                </ListView.ItemContainerStyle>
+                </ListView.ItemContainerStyle>-->
             </ListView>
 
         </Popup>
