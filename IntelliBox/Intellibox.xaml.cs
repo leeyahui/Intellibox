@@ -981,7 +981,8 @@ namespace FeserWard.Controls
 
         private void OnShowAllResults()
         {
-            CreateSearch(PART_EDITFIELD.Text);
+            //CreateSearch(PART_EDITFIELD.Text);
+            PerformSearchActions(PART_EDITFIELD.Text, true);
         }
 
         private static object CoerceMinimumPrefixLengthProperty(DependencyObject reciever, object val)
@@ -1438,14 +1439,14 @@ namespace FeserWard.Controls
             TextChanged?.Invoke(sender, e);
         }
 
-        private void PerformSearchActions(string enteredText)
+        private void PerformSearchActions(string enteredText, bool showAll = false)
         {
             enteredText = ApplyDisableWhitespaceTrim(enteredText);
 
-            if (enteredText.Equals(_lastTextValue))
+            if (enteredText.Equals(_lastTextValue) && !showAll)
                 return;
 
-            if (string.IsNullOrEmpty(enteredText))
+            if (string.IsNullOrEmpty(enteredText) && !showAll)
             {
                 this.SelectedItem = null;
                 OnUserEndedSearchEvent();
@@ -1453,7 +1454,7 @@ namespace FeserWard.Controls
             else
             {
                 bool doSearchNow = !IsSearchInProgress && enteredText.Length >= MinimumPrefixLength;
-                if (doSearchNow)
+                if (doSearchNow || showAll)
                 {
                     SearchTimer = new DispatcherTimer(
                         TimeSpan.FromMilliseconds(MinimumSearchDelay),
