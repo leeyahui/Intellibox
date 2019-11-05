@@ -53,8 +53,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyVersion("1.6.4.0")]
-[assembly: AssemblyFileVersion("1.6.4.0")]
+[assembly: AssemblyVersion("1.6.5.0")]
+[assembly: AssemblyFileVersion("1.6.5.0")]
 [assembly: AssemblyTitle("IntelliBox")]
-[assembly: AssemblyDescription("修改下拉pop不消失的问题、样式修改")]
+[assembly: AssemblyDescription("修改下拉pop不消失的问题、样式修改、下拉按钮点击时焦点问题修改")]
 

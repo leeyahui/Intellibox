@@ -982,6 +982,7 @@ namespace FeserWard.Controls
         private void OnShowAllResults()
         {
             //CreateSearch(PART_EDITFIELD.Text);
+            PART_EDITFIELD.Focus();
             PerformSearchActions(PART_EDITFIELD.Text, true);
         }
 
