@@ -56,14 +56,27 @@ OTHER DEALINGS IN THE SOFTWARE.
         <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=autoBox, Path=DisplayTextFromHighlightedItem}" />
 
         <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
-        <auto:Intellibox 
-                Grid.Row="5" Grid.Column="2"
+        <StackPanel Grid.Row="5" Grid.Column="2">
+            <auto:Intellibox
                 Width="200" Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left"
-            SingleClickToSelectResult="True"
+                IsEnabled="True"
+                SingleClickToSelectResult="True"
+                NoResultsText="没有找到数据"
                 DataProvider="{Binding QueryProvider}"
                 SelectedItem="{Binding SelectedItem}"
-                SelectedValue="{Binding SelectedValue}"
-            />
+                SelectedValue="{Binding SelectedValue}"/>
+            <auto:Intellibox
+                Width="200" SelectAllOnFocus="True" HorizontalAlignment="Left"
+                IsEnabled="False"
+                SingleClickToSelectResult="True"
+                NoResultsText="没有找到数据"
+                DataProvider="{Binding QueryProvider}"
+                SelectedItem="{Binding SelectedItem}"
+                SelectedValue="{Binding SelectedValue}"/>
+            <TextBox Width="40"/>
+            <TextBox Width="40" IsEnabled="False"/>
+        </StackPanel>
+
         <DataGrid Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False" CellEditEnding="DataGrid_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="test">

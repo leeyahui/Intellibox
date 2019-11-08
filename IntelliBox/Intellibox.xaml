@@ -41,20 +41,20 @@ OTHER DEALINGS IN THE SOFTWARE.
             </Style>
 
             <Style TargetType="TextBox">
-                <Setter Property="SnapsToDevicePixels" Value="True" />
-                <Setter Property="OverridesDefaultStyle" Value="True" />
-                <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="Background" Value="LightSkyBlue"/>
+                <Setter Property="BorderBrush" Value="#FF969696"/>
+                <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Padding" Value="1"/>
                 <Setter Property="AllowDrop" Value="true"/>
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="FontFamily" Value="Microsoft YaHei"/>
-                <Setter Property="MinWidth" Value="50"/>
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
-                            <Border CornerRadius="2" BorderThickness="1" BorderBrush="#FF969696">
+                            <Border x:Name="border" CornerRadius="2" BorderThickness="1" BorderBrush="#FF969696">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -71,18 +71,27 @@ OTHER DEALINGS IN THE SOFTWARE.
                                                   Command="{Binding ShowAllResultsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
                                         <ToggleButton.Style>
                                             <Style TargetType="ToggleButton">
-                                                <Setter Property="Foreground" Value="White"></Setter>
+                                                <Setter Property="Foreground" Value="Transparent"></Setter>
                                                 <Setter Property="Template" >
                                                     <Setter.Value>
-                                                        <ControlTemplate  TargetType="{x:Type ToggleButton}">
-                                                            <Grid>
-                                                                <Border Width="15" Height="24" HorizontalAlignment="Right" BorderBrush="Black" BorderThickness="0.5">
+                                                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                            <Grid RenderTransformOrigin="0.5,0.5">
+                                                                <Border Width="15" Height="24" HorizontalAlignment="Right" BorderBrush="Blue" BorderThickness="0">
                                                                     <Border.Background>
-                                                                        <SolidColorBrush Color="White" />
+                                                                        <SolidColorBrush Color="Transparent" />
                                                                     </Border.Background>
-                                                                    <Path Data="M0,0L3.5,4 7,0z" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    <Path x:Name="path" Data="M0,0L3.5,4 7,0z" Fill="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                 </Border>
                                                             </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="IsMouseOver" Value="True">
+                                                                    <Setter Property="Fill" TargetName="path" Value="#FF0FDA25"/>
+                                                                </Trigger>
+                                                                <Trigger Property="IsKeyboardFocused" Value="true"/>
+                                                                <Trigger Property="IsEnabled" Value="false">
+                                                                    <Setter Property="Fill" TargetName="path" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                                                </Trigger>
+                                                            </ControlTemplate.Triggers>
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
@@ -91,6 +100,14 @@ OTHER DEALINGS IN THE SOFTWARE.
                                     </ToggleButton>
                                 </Grid>
                             </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="true">
+                                    <Setter Property="BorderBrush" TargetName="border" Value="#1296db"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="BorderThickness" TargetName="border" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -125,14 +142,12 @@ OTHER DEALINGS IN THE SOFTWARE.
                    FontStyle="{Binding Path=WatermarkFontStyle, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                    FontWeight="{Binding Path=WatermarkFontWeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
             <TextBlock.Visibility>
-
                 <MultiBinding Converter="{StaticResource watermarkVisibilityConverter}"
                               ConverterParameter="invert">
                     <Binding Path="Text"
                              ElementName="PART_EDITFIELD"/>
                     <Binding Path="IsKeyboardFocused"
                              ElementName="PART_EDITFIELD" />
-
                 </MultiBinding>
             </TextBlock.Visibility>
         </TextBlock>
@@ -157,30 +172,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                       VirtualizingStackPanel.IsVirtualizing="True"
                       ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Items}"
                       PreviewKeyDown="lstSearchItems_PreviewKeyDown" MouseDoubleClick="OnListItemMouseDoubleClick" PreviewMouseLeftButtonUp="OnListItemMouseSingleClick">
-                <!--<ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <Setter Property="FontSize" Value="12"/>
-                        <Setter Property="FontFamily" Value="Microsoft YaHei"/>
-                        <Style.Triggers>
-                            <Trigger Property="ListView.AlternationIndex" Value="0">
-                                <Setter Property="Background" Value="#f5f5f7"/>
-                            </Trigger>
-                            <Trigger Property="ListView.AlternationIndex" Value="1">
-                                <Setter Property="Background" Value="#f9f9fa"/>
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#0078D7"/>
-                                <Setter Property="Foreground" Value="White"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="LightBlue"/>
-                                <Setter Property="Foreground" Value="Black"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.ItemContainerStyle>-->
             </ListView>
-
         </Popup>
 
         <Popup StaysOpen="False"

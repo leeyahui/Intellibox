@@ -1585,6 +1585,5 @@ namespace FeserWard.Controls
         /// Event called when text is updated.
         /// </summary>
         public event EventHandler<TextChangedEventArgs> TextChanged;
-
     }
 }
