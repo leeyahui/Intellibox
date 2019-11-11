@@ -121,7 +121,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
     </UserControl.Resources>
 
-    <Grid>
+    <Grid FocusManager.FocusedElement="{Binding ElementName=PART_EDITFIELD}">
         <TextBox Name="PART_EDITFIELD"
                  PreviewKeyDown="OnTextBoxPreviewKeyDown"
                  KeyUp="OnTextBoxKeyUp"
@@ -236,14 +236,6 @@ OTHER DEALINGS IN THE SOFTWARE.
             </Border>
 
         </Popup>
-        <Grid.Style>
-            <Style TargetType="Grid">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding ElementName=PART_EDITFIELD, Path=IsVisible}" Value="True">
-                        <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PART_EDITFIELD}"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>
+
     </Grid>
 </UserControl>
