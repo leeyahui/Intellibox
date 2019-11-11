@@ -128,6 +128,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataGridBehavior.cs" />
     <Compile Include="Infrastructure\IntelliboxExamplesBootstrapper.cs" />
     <Compile Include="SearchProviders\Issue5544ResultsProvider.cs" />
     <Compile Include="SearchProviders\NotifyingProvider.cs" />

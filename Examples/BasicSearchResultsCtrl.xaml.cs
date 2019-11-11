@@ -36,35 +36,5 @@ namespace Examples
         {
             InitializeComponent();
         }
-
-        private static T GetVisualChild<T>(DependencyObject visual) where T : DependencyObject
-        {
-            if (visual == null)
-                return null;
-
-            var count = VisualTreeHelper.GetChildrenCount(visual);
-            for (int i = 0; i < count; i++)
-            {
-                var child = VisualTreeHelper.GetChild(visual, i);
-
-                var childOfTypeT = child as T ?? GetVisualChild<T>(child);
-                if (childOfTypeT != null)
-                    return childOfTypeT;
-            }
-
-            return null;
-        }
-
-        private void DataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
-        {
-            if (e.Column.GetType() == typeof(DataGridTemplateColumn))
-            {
-                var popup = GetVisualChild<Popup>(e.EditingElement);
-                if (popup != null && popup.IsOpen && popup.Name.Equals("IntelliboxPopup1"))
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
     }
 }
