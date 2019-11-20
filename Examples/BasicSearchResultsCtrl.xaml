@@ -93,6 +93,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left" SingleClickToSelectResult="True" MinimumPrefixLength="0"
+                                             FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"
                             DataProvider="{Binding DataContext.QueryProvider,RelativeSource={RelativeSource AncestorType=UserControl}}"
                             SelectedItem="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"
                             SelectedValue="{Binding DataContext.SelectedValue,RelativeSource={RelativeSource AncestorType=UserControl}}"/>

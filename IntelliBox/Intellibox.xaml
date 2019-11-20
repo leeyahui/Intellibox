@@ -105,7 +105,10 @@ OTHER DEALINGS IN THE SOFTWARE.
                                     <Setter Property="BorderBrush" TargetName="border" Value="#1296db"/>
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="false">
-                                    <Setter Property="BorderThickness" TargetName="border" Value="0.5"/>
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                                <Trigger Property="IsReadOnly" Value="true">
+                                    <Setter Property="Foreground" Value="Gray"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -242,7 +245,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding ElementName=PART_EDITFIELD, Path=IsVisible}" Value="True"/>
-                            <!--<Condition Binding="{Binding ElementName=Part_Grid, Path=IsFocused}" Value="True"/>-->
+                            <!--<Condition Binding="{Binding ElementName=PART_EDITFIELD, Path=IsKeyboardFocused}" Value="True"/>-->
                         </MultiDataTrigger.Conditions>
                         <MultiDataTrigger.Setters>
                             <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PART_EDITFIELD}"/>

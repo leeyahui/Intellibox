@@ -1404,11 +1404,11 @@ namespace FeserWard.Controls
                 return;
             }
 
-            var field = sender as TextBox;
-            if (field != null)
-            {
-                PerformSearchActions(field.Text);
-            }
+            //var field = sender as TextBox;
+            //if (field != null)
+            //{
+            //    PerformSearchActions(field.Text);
+            //}
         }
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
@@ -1437,6 +1437,11 @@ namespace FeserWard.Controls
 
         private void OnTextBoxChanged(object sender, TextChangedEventArgs e)
         {
+            var field = sender as TextBox;
+            if (field != null)
+            {
+                PerformSearchActions(field.Text);
+            }
             TextChanged?.Invoke(sender, e);
         }
 
@@ -1444,8 +1449,8 @@ namespace FeserWard.Controls
         {
             enteredText = ApplyDisableWhitespaceTrim(enteredText);
 
-            if (enteredText.Equals(_lastTextValue) && !showAll)
-                return;
+            //if (enteredText.Equals(_lastTextValue) && !showAll)
+            //    return;
 
             if (string.IsNullOrEmpty(enteredText) && !showAll)
             {
