@@ -22,19 +22,17 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Diagnostics;
-using System.Collections;
 using System.Windows.Threading;
-using System.Windows;
-using System;
-using System.Windows.Controls;
-using System.Windows.Documents;
 
 namespace FeserWard.Controls
 {
@@ -242,7 +240,7 @@ namespace FeserWard.Controls
             DependencyProperty.Register("SingleClickToSelectResult", typeof(bool), typeof(Intellibox),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        private static Type[] _baseTypes = new[] {
+        private static readonly Type[] _baseTypes = new[] {
             typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
             typeof(double), typeof(float),
             typeof(short), typeof(ushort), typeof(int), typeof(uint), typeof(long), typeof(ulong),
@@ -448,7 +446,7 @@ namespace FeserWard.Controls
         {
             get
             {
-                return (object)GetValue(IntermediateSelectedValueProperty);
+                return GetValue(IntermediateSelectedValueProperty);
             }
             set
             {
@@ -711,7 +709,7 @@ namespace FeserWard.Controls
         {
             get
             {
-                return (object)GetValue(SelectedItemProperty);
+                return GetValue(SelectedItemProperty);
             }
             set
             {
@@ -727,7 +725,7 @@ namespace FeserWard.Controls
         {
             get
             {
-                return (object)GetValue(SelectedValueProperty);
+                return GetValue(SelectedValueProperty);
             }
             set
             {
@@ -990,7 +988,9 @@ namespace FeserWard.Controls
         {
             var intval = (int)val;
             if (intval < 1)
+            {
                 intval = 1;
+            }
 
             return intval;
         }
@@ -999,7 +999,9 @@ namespace FeserWard.Controls
         {
             var intval = (int)val;
             if (intval < MinimumSearchDelayMS)
+            {
                 intval = MinimumSearchDelayMS;
+            }
 
             return intval;
         }
@@ -1156,17 +1158,25 @@ namespace FeserWard.Controls
             if (nextIndex < 0)
             {
                 if (ResultsList.SelectedIndex != 0)
+                {
                     nextIndex = 0;
+                }
                 else
+                {
                     nextIndex = maxIndex;
+                }
             }
 
             if (nextIndex >= maxIndex)
             {
                 if (ResultsList.SelectedIndex != maxIndex)
+                {
                     nextIndex = maxIndex;
+                }
                 else
+                {
                     nextIndex = 0;
+                }
             }
 
             var selectedItem = Items[nextIndex];
@@ -1245,10 +1255,10 @@ namespace FeserWard.Controls
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 
-        private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
-        {
+        //private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
+        //{
 
-        }
+        //}
 
         private static void OnSelectedItemChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
         {
@@ -1267,21 +1277,27 @@ namespace FeserWard.Controls
         private void OnListItemMouseSingleClick(object sender, MouseButtonEventArgs e)
         {
             if (SingleClickToSelectResult)
+            {
                 ChooseCurrentItem();
+            }
         }
 
         private void OnListItemMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!SingleClickToSelectResult)
+            {
                 ChooseCurrentItem();
+            }
         }
 
-        private void OnListItemKeyDown(object sender, KeyEventArgs e)
-        {
-            // Enter selects the current item
-            if (e.Key == Key.Enter)
-                ChooseCurrentItem();
-        }
+        //private void OnListItemKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    // Enter selects the current item
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        ChooseCurrentItem();
+        //    }
+        //}
 
         //private void OnRowColorizerChanged()
         //{
@@ -1397,24 +1413,28 @@ namespace FeserWard.Controls
         private void OnTextBoxKeyUp(object sender, KeyEventArgs e)
         {
             if (!HasDataProvider)
+            {
                 return;
+            }
 
             if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key))
             {
                 return;
             }
 
-            //var field = sender as TextBox;
-            //if (field != null)
-            //{
-            //    PerformSearchActions(field.Text);
-            //}
+            var field = sender as TextBox;
+            if (field != null)
+            {
+                PerformSearchActions(field.Text);
+            }
         }
 
         private void OnTextBoxPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (!HasDataProvider || !ShowResults)
+            {
                 return;
+            }
 
             if (IsCancelKey(e.Key))
             {
@@ -1437,11 +1457,11 @@ namespace FeserWard.Controls
 
         private void OnTextBoxChanged(object sender, TextChangedEventArgs e)
         {
-            var field = sender as TextBox;
-            if (field != null)
-            {
-                PerformSearchActions(field.Text);
-            }
+            //var field = sender as TextBox;
+            //if (field != null)
+            //{
+            //    PerformSearchActions(field.Text);
+            //}
             TextChanged?.Invoke(sender, e);
         }
 
@@ -1502,7 +1522,9 @@ namespace FeserWard.Controls
         private void ProcessSearchResults(DateTime startTimeUtc, IEnumerable results)
         {
             if (_lastTimeSearchRecievedUtc > startTimeUtc)
+            {
                 return; // this result set isn't fresh, so don't bother processing it
+            }
 
             _lastTimeSearchRecievedUtc = startTimeUtc;
 
@@ -1513,7 +1535,7 @@ namespace FeserWard.Controls
                 ? new List<string>()
                 : ((results is IList)
                     ? (IList)results //optimization to keep from making a copy of the list
-                    : (IList)results.Cast<object>().ToList());
+                    : results.Cast<object>().ToList());
 
             noResultsPopup.IsOpen = Items.Count < 1;
 
