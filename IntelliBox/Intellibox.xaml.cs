@@ -758,7 +758,7 @@ namespace FeserWard.Controls
         }
 
         /// <summary>
-        /// When <see cref="true"/> query results that have only a single result will will be automatically selected.
+        /// When <see cref="bool"/> query results that have only a single result will will be automatically selected.
         /// </summary>
         public bool AutoSelectSingleResult
         {
