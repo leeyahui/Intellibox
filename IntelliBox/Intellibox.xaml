@@ -51,10 +51,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
                 <Setter Property="FontSize" Value="12"/>
                 <Setter Property="FontFamily" Value="Microsoft YaHei"/>
+                <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
-                            <Border x:Name="border" CornerRadius="2" BorderThickness="1" BorderBrush="#FF969696">
+                            <Border x:Name="border" BorderThickness="1" BorderBrush="#FF969696">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
