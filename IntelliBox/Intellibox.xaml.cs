@@ -1417,14 +1417,28 @@ namespace FeserWard.Controls
                 return;
             }
 
-            if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key))
-            {
-                return;
-            }
+
 
             var field = sender as TextBox;
             if (field != null)
             {
+                if ((e.Key == Key.Down || e.Key == Key.NumPad2) && ShowResults == false)
+                {
+                    if (string.IsNullOrEmpty(field.Text))
+                    {
+                        OnShowAllResults();
+                    }
+                    else
+                    {
+                        PerformSearchActions(field.Text);
+                    }
+                    return;
+                }
+                else if (IsCancelKey(e.Key) || IsChooseCurrentItemKey(e.Key) || IsNavigationKey(e.Key))
+                {
+                    return;
+                }
+
                 PerformSearchActions(field.Text);
             }
         }
