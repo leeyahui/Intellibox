@@ -1417,8 +1417,6 @@ namespace FeserWard.Controls
                 return;
             }
 
-
-
             var field = sender as TextBox;
             if (field != null)
             {

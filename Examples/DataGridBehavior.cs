@@ -16,7 +16,7 @@ namespace Examples
         protected override void OnAttached()
         {
             AssociatedObject.CurrentCellChanged += AssociatedObject_CurrentCellChanged;
-            AssociatedObject.CellEditEnding += AssociatedObject_CellEditEnding;
+            //AssociatedObject.CellEditEnding += AssociatedObject_CellEditEnding;
         }
 
         private void AssociatedObject_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -28,7 +28,6 @@ namespace Examples
                 {
                     e.Cancel = true;
                 }
-                var grid = GetVisualChild<Grid>(e.EditingElement);
             }
         }
 

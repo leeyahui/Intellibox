@@ -25,6 +25,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 using FeserWard.Controls;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Examples.ViewModels
 {
@@ -37,6 +39,9 @@ namespace Examples.ViewModels
         public object SelectedValue { get { return _selectedValue; } set { if (value != _selectedValue) { _selectedValue = value; NotifyOfPropertyChange(() => SelectedValue); } } }
 
         private IIntelliboxResultsProvider _queryProvider;
+        private Person currPerson;
+        //private string currPersonName;
+
         public IIntelliboxResultsProvider QueryProvider { get { return _queryProvider; } private set { if (value != _queryProvider) { _queryProvider = value; this.NotifyOfPropertyChange(() => QueryProvider); } } }
 
         public StandardSearchVM(IIntelliboxResultsProvider provider)
@@ -44,11 +49,41 @@ namespace Examples.ViewModels
             QueryProvider = provider;
         }
 
-        public List<string> DataGridSource
+        public Person CurrPerson { get => currPerson; set { currPerson = value; NotifyOfPropertyChange(() => CurrPerson); } }
+
+        public string CurrPersonName
+        {
+            get => CurrPerson.name;
+            set
+            {
+                MessageBox.Show(CurrPerson.id.ToString());
+                CurrPerson.name = value;
+            }
+        }
+
+        public ObservableCollection<Person> DataGridSource
         {
             get
             {
-                return new List<string>() { "test1", "test2" };
+                return new ObservableCollection<Person>() { new Person() { id = 1, name = "test1" }, new Person() { id = 2, name = "test2" } };
+            }
+        }
+    }
+
+    public class Person : PropertyChangedBase
+    {
+        private int id1;
+        private string name1;
+
+        public int id { get => id1; set { id1 = value; NotifyOfPropertyChange(() => id); } }
+
+        public string name
+        {
+            get => name1;
+            set
+            {
+                name1 = value;
+                NotifyOfPropertyChange(() => name);
             }
         }
     }

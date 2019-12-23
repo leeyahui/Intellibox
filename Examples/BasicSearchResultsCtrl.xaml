@@ -30,8 +30,8 @@ OTHER DEALINGS IN THE SOFTWARE.
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:auto="clr-namespace:FeserWard.Controls;assembly=IntelliBox"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:behavior="clr-namespace:Examples">
-
+    xmlns:behavior="clr-namespace:Examples"
+    Name="ucName">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20px" />
@@ -79,15 +79,16 @@ OTHER DEALINGS IN THE SOFTWARE.
             <TextBox Width="40" IsEnabled="False"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False">
+        <DataGrid x:Name="dtName" Grid.Row="6" ItemsSource="{Binding DataGridSource}" AutoGenerateColumns="False" CurrentItem="{Binding CurrPerson,Mode=TwoWay}">
             <i:Interaction.Behaviors>
                 <behavior:DataGridBehavior />
             </i:Interaction.Behaviors>
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="test">
+                <DataGridTextColumn Header="id" Binding="{Binding id}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            <TextBlock Text="{Binding name}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -95,8 +96,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                             <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left" SingleClickToSelectResult="True" MinimumPrefixLength="0"
                                              FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"
                             DataProvider="{Binding DataContext.QueryProvider,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            SelectedItem="{Binding DataContext.SelectedItem,RelativeSource={RelativeSource AncestorType=UserControl}}"
-                            SelectedValue="{Binding DataContext.SelectedValue,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                            SelectedItem="{Binding Source={x:Reference ucName},Path=DataContext.CurrPersonName}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
