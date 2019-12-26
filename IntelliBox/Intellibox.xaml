@@ -238,7 +238,6 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </Button>
                 </Grid>
             </Border>
-
         </Popup>
         <Grid.Style>
             <Style TargetType="Grid">
@@ -246,7 +245,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <MultiDataTrigger>
                         <MultiDataTrigger.Conditions>
                             <Condition Binding="{Binding ElementName=PART_EDITFIELD, Path=IsVisible}" Value="True"/>
-                            <!--<Condition Binding="{Binding ElementName=PART_EDITFIELD, Path=IsKeyboardFocused}" Value="True"/>-->
+                            <Condition Binding="{Binding AutoFocus,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True"/>
                         </MultiDataTrigger.Conditions>
                         <MultiDataTrigger.Setters>
                             <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=PART_EDITFIELD}"/>

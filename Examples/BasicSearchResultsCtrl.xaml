@@ -93,7 +93,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" HorizontalAlignment="Left" SingleClickToSelectResult="True" MinimumPrefixLength="0"
+                            <auto:Intellibox Name="autoBox" SelectAllOnFocus="True" AutoFocus="True" HorizontalAlignment="Left" SingleClickToSelectResult="True" MinimumPrefixLength="0"
                                              FocusManager.FocusedElement="{Binding RelativeSource={RelativeSource Self}}"
                             DataProvider="{Binding DataContext.QueryProvider,RelativeSource={RelativeSource AncestorType=UserControl}}"
                             SelectedItem="{Binding Source={x:Reference ucName},Path=DataContext.CurrPersonName}"/>

@@ -189,6 +189,11 @@ namespace FeserWard.Controls
         protected static readonly DependencyProperty ShowResultsProperty =
             DependencyProperty.Register("ShowResults", typeof(bool), typeof(Intellibox), new UIPropertyMetadata(false));
 
+
+        // Using a DependencyProperty as the backing store for AutoFocus.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AutoFocusProperty =
+            DependencyProperty.Register("AutoFocus", typeof(bool), typeof(Intellibox), new PropertyMetadata(false));
+
         /// <summary>
         /// Identifies the <see cref="WatermarkBackground"/> Dependancy Property.
         /// </summary>
@@ -784,6 +789,11 @@ namespace FeserWard.Controls
             }
         }
 
+        public bool AutoFocus
+        {
+            get { return (bool)GetValue(AutoFocusProperty); }
+            set { SetValue(AutoFocusProperty, value); }
+        }
         /// <summary>
         /// The amount of time (in milliseconds) that the <see cref="Intellibox"/> control
         /// will wait for results to come back before showing the user a "Waiting for results" message.
