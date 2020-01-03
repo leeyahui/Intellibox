@@ -53,8 +53,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyVersion("1.6.11.0")]
-[assembly: AssemblyFileVersion("1.6.11.0")]
+[assembly: AssemblyVersion("1.6.12.0")]
+[assembly: AssemblyFileVersion("1.6.12.0")]
 [assembly: AssemblyTitle("IntelliBox")]
-[assembly: AssemblyDescription("修改录入框为没有圆角，键盘操作优化，焦点问题优化")]
+[assembly: AssemblyDescription("修改录入框为没有圆角，键盘操作优化，焦点问题优化、背景色优化")]
 

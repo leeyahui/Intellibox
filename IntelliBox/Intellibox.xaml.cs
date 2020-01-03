@@ -1023,16 +1023,17 @@ namespace FeserWard.Controls
 
         private void ChooseCurrentItem()
         {
-            this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
-
             _lastTextValue = UpdateSearchBoxText(true);
 
             OnUserEndedSearchEvent();
+
+            this.SetValue(SelectedItemProperty, ResultsList.SelectedItem);
 
             if (Items != null)
             {
                 Items = null;
             }
+
         }
 
         private GridView ConstructGridView(object item)
@@ -1467,6 +1468,7 @@ namespace FeserWard.Controls
             if (IsChooseCurrentItemKey(e.Key))
             {
                 ChooseCurrentItem();
+                e.Handled = true;
                 return;
             }
 

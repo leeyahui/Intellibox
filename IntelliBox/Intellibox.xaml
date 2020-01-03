@@ -56,7 +56,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                     <Setter.Value>
                         <ControlTemplate TargetType="TextBox">
                             <Border x:Name="border" BorderThickness="1" BorderBrush="#FF969696">
-                                <Grid>
+                                <Grid Background="White">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="auto"/>

@@ -100,6 +100,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Sex" Binding="{Binding sex}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

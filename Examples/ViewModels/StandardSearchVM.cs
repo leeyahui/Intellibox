@@ -56,7 +56,7 @@ namespace Examples.ViewModels
             get => CurrPerson.name;
             set
             {
-                MessageBox.Show(CurrPerson.id.ToString());
+                //MessageBox.Show(CurrPerson.id.ToString());
                 CurrPerson.name = value;
             }
         }
@@ -65,7 +65,7 @@ namespace Examples.ViewModels
         {
             get
             {
-                return new ObservableCollection<Person>() { new Person() { id = 1, name = "test1" }, new Person() { id = 2, name = "test2" } };
+                return new ObservableCollection<Person>() { new Person() { id = 1, name = "test1", sex = "male" }, new Person() { id = 2, name = "test2", sex = "female" } };
             }
         }
     }
@@ -74,6 +74,7 @@ namespace Examples.ViewModels
     {
         private int id1;
         private string name1;
+        private string sex1;
 
         public int id { get => id1; set { id1 = value; NotifyOfPropertyChange(() => id); } }
 
@@ -84,6 +85,16 @@ namespace Examples.ViewModels
             {
                 name1 = value;
                 NotifyOfPropertyChange(() => name);
+            }
+        }
+
+        public string sex
+        {
+            get => sex1;
+            set
+            {
+                sex1 = value;
+                NotifyOfPropertyChange(() => sex);
             }
         }
     }
