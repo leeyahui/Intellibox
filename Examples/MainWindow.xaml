@@ -44,8 +44,37 @@ OTHER DEALINGS IN THE SOFTWARE.
     <TabControl TabStripPlacement="Bottom">
         <TabItem Header="Examples" DataContext="{Binding Examples}">
             <TabControl TabStripPlacement="Left">
+                <TabItem Header="DataTemplateTest" DataContext="{Binding MultipleColumnVM}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20px" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="20px" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="10px" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Selected Value:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding SelectedValue}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">Selected Item:</TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding SelectedItem}" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">Highlighted Value:</TextBlock>
+                        <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding ElementName=multiColumn, Path=DisplayTextFromHighlightedItem}" />
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,6,0">Search:</TextBlock>
+                        <ContentControl Grid.Row="5" Grid.Column="2" ContentTemplate="{DynamicResource dataTemplateTest}" Content="{Binding}"/>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="No Search Results"
-                 ToolTip="Shows what happens when no search results are avalable.">
+                         ToolTip="Shows what happens when no search results are avalable.">
                     <StackPanel>
                         <TextBlock>Type anything.</TextBlock>
                         <TextBlock>This example shows what happens when no search results are available.</TextBlock>
@@ -113,7 +142,11 @@ OTHER DEALINGS IN THE SOFTWARE.
                                 DisplayedValueBinding="{Binding FirstName}"
                                 SelectedValueBinding="{Binding PersonID}"
                                 DataProvider="{Binding QueryProvider}">
-
+                                <auto:Intellibox.GridView>
+                                    <GridView>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" Header="姓名" Width="100"/>
+                                    </GridView>
+                                </auto:Intellibox.GridView>
                             </auto:Intellibox>
                         </Grid>
                     </StackPanel>

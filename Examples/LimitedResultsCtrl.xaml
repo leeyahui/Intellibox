@@ -60,7 +60,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                 MaxResults="3"
                 DataProvider="{Binding QueryProvider}"
                 SelectedItem="{Binding SelectedItem}"
-                SelectedValue="{Binding SelectedValue}"
-            />
+                SelectedValue="{Binding SelectedValue}">
+        </auto:Intellibox>
     </Grid>
 </UserControl>

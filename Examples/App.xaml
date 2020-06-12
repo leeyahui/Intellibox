@@ -34,6 +34,7 @@ OTHER DEALINGS IN THE SOFTWARE.
                 <ResourceDictionary>
                     <local:IntelliboxExamplesBootstrapper x:Key="bootstrapper" />
                 </ResourceDictionary>
+                <ResourceDictionary Source="/Examples;component/DataTemplateTest.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -64,6 +64,16 @@ namespace FeserWard.Controls
 
         private const int MinimumSearchDelayMS = 125;
 
+        public GridView GridView
+        {
+            get { return (GridView)GetValue(ItemTemplateProperty); }
+            set { SetValue(ItemTemplateProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for CheckedItemTemplate.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemTemplateProperty =
+            DependencyProperty.Register("GridView", typeof(GridView), typeof(Intellibox), new PropertyMetadata(null));
+
         /// <summary>
         /// Identifies the <see cref="DataProviderProperty"/> Dependancy Property.
         /// </summary>
@@ -365,7 +375,7 @@ namespace FeserWard.Controls
             }
         }
 
-        private string DisplayTextFromHighlightedItem
+        public string DisplayTextFromHighlightedItem
         {
             get
             {
@@ -377,7 +387,7 @@ namespace FeserWard.Controls
             }
         }
 
-        private string DisplayTextFromSelectedItem
+        public string DisplayTextFromSelectedItem
         {
             get
             {
@@ -661,22 +671,6 @@ namespace FeserWard.Controls
                 SetValue(ResultsWidthProperty, value);
             }
         }
-
-        ///// <summary>
-        ///// Gets or sets the <see cref="IntelliboxAlternateRowColorizer"/> used to color each row of the search result set.
-        ///// Set to an instance of <see cref="IntelliboxRowColorizer"/> by default.
-        ///// </summary>
-        //public IntelliboxRowColorizer RowColorizer {
-        //    get {
-        //        return _rowColorizer;
-        //    }
-        //    set {
-        //        if (_rowColorizer != value) {
-        //            _rowColorizer = value;
-        //            OnRowColorizerChanged();
-        //        }
-        //    }
-        //}
 
         /// <summary>
         /// The Search provider that will actually perform the search
@@ -1266,10 +1260,6 @@ namespace FeserWard.Controls
                 BindingBaseFactory.ConstructBindingForSelected(this, DisplayedValueBinding));
         }
 
-        //private static void OnIsDropDownOpenChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
-        //{
-
-        //}
 
         private static void OnSelectedItemChanged(DependencyObject receiver, DependencyPropertyChangedEventArgs args)
         {
@@ -1300,39 +1290,6 @@ namespace FeserWard.Controls
                 ChooseCurrentItem();
             }
         }
-
-        //private void OnListItemKeyDown(object sender, KeyEventArgs e)
-        //{
-        //    // Enter selects the current item
-        //    if (e.Key == Key.Enter)
-        //    {
-        //        ChooseCurrentItem();
-        //    }
-        //}
-
-        //private void OnRowColorizerChanged()
-        //{
-        //    if (IsInitialized)
-        //    {
-        //        var bind = new Binding()
-        //        {
-        //            RelativeSource = RelativeSource.Self,
-        //            //Converter = RowColorizer
-        //        };
-
-        //        var style = new Style(typeof(ListViewItem));
-        //        style.Setters.Add(new Setter(ListViewItem.BackgroundProperty, bind));
-
-        //        var settSingleClick = new EventSetter(ListViewItem.PreviewMouseLeftButtonUpEvent, new MouseButtonEventHandler(OnListItemMouseSingleClick));
-        //        style.Setters.Add(settSingleClick);
-        //        var settDoubleClick = new EventSetter(ListViewItem.MouseDoubleClickEvent, new MouseButtonEventHandler(OnListItemMouseDoubleClick));
-        //        style.Setters.Add(settDoubleClick);
-        //        var settKeyDown = new EventSetter(ListViewItem.KeyDownEvent, new KeyEventHandler(OnListItemKeyDown));
-        //        style.Setters.Add(settKeyDown);
-
-        //        Resources[typeof(ListViewItem)] = style;
-        //    }
-        //}
 
         private void OnSearchBeginning(string term, int max, object data)
         {
@@ -1566,7 +1523,8 @@ namespace FeserWard.Controls
             if (Items.Count > 0)
             {
                 // recreate the GridView for each result set so that the column widths are recalculated
-                ResultsList.View = ConstructGridView(Items[0]);
+                ResultsList.View = GridView != null ? GridView : ConstructGridView(Items[0]);
+
                 ResultsList.SelectedIndex = 0;
                 ShowResults = true;
             }

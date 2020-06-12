@@ -1,0 +1,30 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Examples" 
+                    xmlns:auto="clr-namespace:FeserWard.Controls;assembly=Intellibox">
+    <DataTemplate x:Key="dataTemplateTest">
+        <Grid>
+            <auto:Intellibox    Width="200" 
+                                Margin="5 0 20 0"
+                                 Height="25" 
+                                 Name="combox_chargetype"
+                                 ResultsHeight="200"
+                                 NoResultsText="没有找到匹配项"
+                                 Focusable="True"
+                                 ExplicitlyIncludeColumns="True"
+                                 SelectAllOnFocus="True"
+                                 SingleClickToSelectResult="True"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                DisplayedValueBinding="{Binding FirstName}"
+                                SelectedValueBinding="{Binding PersonID}"
+                                DataProvider="{Binding QueryProvider}">
+                <auto:Intellibox.GridView>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=FirstName}" Header="姓名" Width="100"/>
+                    </GridView>
+                </auto:Intellibox.GridView>
+            </auto:Intellibox>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

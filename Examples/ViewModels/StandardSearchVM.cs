@@ -33,7 +33,18 @@ namespace Examples.ViewModels
     public class StandardSearchVM : PropertyChangedBase
     {
         private object _selectedItem;
-        public object SelectedItem { get { return _selectedItem; } set { if (value != _selectedItem) { _selectedItem = value; NotifyOfPropertyChange(() => SelectedItem); } } }
+        public object SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                if (value != _selectedItem)
+                {
+                    _selectedItem = value;
+                    NotifyOfPropertyChange(() => SelectedItem);
+                }
+            }
+        }
 
         private object _selectedValue;
         public object SelectedValue { get { return _selectedValue; } set { if (value != _selectedValue) { _selectedValue = value; NotifyOfPropertyChange(() => SelectedValue); } } }
