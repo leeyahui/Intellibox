@@ -102,20 +102,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Intellibox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
+    <Compile Include="FilePathSearchProvider.cs" />
+    <Compile Include="Intellibox.cs" />
+    <Compile Include="PopupTopmostBehavior.cs" />
+    <Compile Include="WatermarkTextVisibilityConverter.cs" />
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="FilePathSearchProvider.cs" />
-    <Compile Include="PopupTopmostBehavior.cs" />
-    <Compile Include="WatermarkTextVisibilityConverter.cs" />
-    <Compile Include="Intellibox.xaml.cs">
-      <DependentUpon>Intellibox.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Themes\ListView.xaml">
+    <Page Include="Themes\IntelliBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

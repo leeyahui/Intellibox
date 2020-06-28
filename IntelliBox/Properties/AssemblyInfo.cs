@@ -25,6 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System.Reflection;
 using System.Runtime.InteropServices;
 
+[assembly: System.Windows.ThemeInfo(System.Windows.ResourceDictionaryLocation.None, System.Windows.ResourceDictionaryLocation.SourceAssembly)]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("IntelliBox")]
 [assembly: AssemblyCopyright("Copyright © 2010 Stephen P Ward and Joseph E Feser")]

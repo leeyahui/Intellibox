@@ -1,0 +1,8 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:FeserWard.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/IntelliBox;component/Themes/IntelliBox.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

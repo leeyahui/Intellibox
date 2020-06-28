@@ -88,7 +88,7 @@ namespace FeserWard.Controls {
         }
 
         public static BindingBase ConstructBindingForHighlighted(Intellibox source, BindingBase template) {
-            return ConstructBinding(source, template, "ResultsList.SelectedItem");
+            return ConstructBinding(source, template, "ListViewResult.SelectedItem");
         }
 
         public static BindingBase ConstructBindingForSelected(Intellibox source, BindingBase template) {
