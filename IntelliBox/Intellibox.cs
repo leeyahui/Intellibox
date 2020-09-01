@@ -965,7 +965,8 @@ namespace FeserWard.Controls
 
         private void ListViewResult_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (SingleClickToSelectResult)
+            var flag = !(e.OriginalSource is RepeatButton || e.OriginalSource is Thumb);//判断鼠标点击的是滚动调部分
+            if (flag && SingleClickToSelectResult)
             {
                 ChooseCurrentItem();
             }

@@ -57,5 +57,5 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.6.12.0")]
 [assembly: AssemblyFileVersion("1.6.12.0")]
 [assembly: AssemblyTitle("IntelliBox")]
-[assembly: AssemblyDescription("修改录入框为没有圆角，键盘操作优化，焦点问题优化、背景色优化")]
+[assembly: AssemblyDescription("优化点击滚动条选中项目的问题")]
 
