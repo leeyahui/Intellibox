@@ -895,6 +895,8 @@ namespace FeserWard.Controls
                 TxtInput.KeyUp += TxtInput_KeyUp;
                 TxtInput.GotFocus += TxtInput_GotFocus;
             }
+
+            UpdateSearchBoxText(true);
         }
 
         private void TxtInput_GotFocus(object sender, RoutedEventArgs e)
